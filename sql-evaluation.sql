@@ -285,6 +285,9 @@ SELECT IF(to_days(IFNULL(dateRet,CURRENT_DATE)) - to_days(dateEmp) - dureeMax > 
 SELECT AVG(IF(to_days(IFNULL(dateRet,CURRENT_DATE)) - to_days(dateEmp) - dureeMax > 0, to_days(IFNULL(dateRet,CURRENT_DATE)) - to_days(dateEmp) - dureeMax, 0)) moyenne FROM emprunter;
 /* Durée moyenne des retards pour l’ensemble des emprunts. */
 
+SELECT AVG( datediff(dateRet, dateEmp)) as Moyenne FROM emprunter WHERE datediff(dateRet,dateEmp) > dureeMax;
+
+
 
 
 SELECT AVG(if(to_days(IFNULL(dateRet,CURRENT_DATE)) - to_days(dateEmp) - dureeMax > 0, to_days(IFNULL(dateRet,CURRENT_DATE)) - to_days(dateEmp) - dureeMax, 0) )moyenne FROM emprunter WHERE dateRet is NULL;
