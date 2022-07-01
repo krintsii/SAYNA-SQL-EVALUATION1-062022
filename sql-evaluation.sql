@@ -176,18 +176,7 @@ select * from oeuvres;
 /* tous les ouvres */
 
 
-/* ATTRIBUTS */
-SELECT COUNT(*) attributes from information_schema.COLUMNS
-WHERE TABLE_SCHEMA = 'biblio';
 
-
-
-/* TUPLES */
-SELECT SUM(TABLE_ROWS) as tuples from information_schema.tables WHERE TABLE_SCHEMA='biblio';
-
-
-/* CLE PRIMAIRE */
-SELECT emprunter.NL,adherents.NA,livres.NL, dateEmp,nom from adherents,livres,emprunter;
 
 #############################02###################################
 /* Corriger les erreurs : expliquer les corrections que vous apportez. */
@@ -195,6 +184,30 @@ UPDATE emprunter SET dateEmp=from_days(to_days(current_date)-1290) WHERE NL=12;
 UPDATE emprunter SET dateRet=from_days(to_days(current_date)-300) WHERE NL=12;
 UPDATE emprunter SET dateEmp=from_days(to_days(current_date)-318) WHERE NL=26;
 UPDATE emprunter SET dateRet=from_days(to_days(current_date)-315) WHERE NL=26;
+
+
+
+
+#############03###############""
+/* TUPLES */
+SELECT SUM(TABLE_ROWS) as tuples from information_schema.tables WHERE TABLE_SCHEMA='biblio';
+
+
+
+
+#######################04############################
+/* ATTRIBUTS */
+SELECT COUNT(*) attributes from information_schema.COLUMNS
+WHERE TABLE_SCHEMA = 'biblio';
+
+
+
+
+
+#####################05########################""
+/* CLE PRIMAIRE */
+SELECT emprunter.NL,adherents.NA,livres.NL, dateEmp,nom from adherents,livres,emprunter;
+
 
 
 
