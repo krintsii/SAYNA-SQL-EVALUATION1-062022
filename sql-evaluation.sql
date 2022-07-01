@@ -176,6 +176,18 @@ select * from oeuvres;
 /* tous les ouvres */
 
 
+/* ATTRIBUTS */
+SELECT COUNT(*) attributes from information_schema.COLUMNS
+WHERE TABLE_SCHEMA = 'biblio';
+
+
+
+/* TUPLES */
+SELECT SUM(TABLE_ROWS) as tuples from information_schema.tables WHERE TABLE_SCHEMA='biblio';
+
+
+/* CLE PRIMAIRE */
+SELECT emprunter.NL,adherents.NA,livres.NL, dateEmp,nom from adherents,livres,emprunter;
 
 #############################02###################################
 /* Corriger les erreurs : expliquer les corrections que vous apportez. */
@@ -348,4 +360,4 @@ SELECT AVG( datediff(dateRet, dateEmp)) as Moyenne FROM emprunter WHERE datediff
 /* Durée moyenne des retards parmi les seuls retardataires */
 SELECT AVG(if(to_days(IFNULL(dateRet,CURRENT_DATE)) - to_days(dateEmp) - dureeMax > 0, to_days(IFNULL(dateRet,CURRENT_DATE)) - to_days(dateEmp) - dureeMax, 0) )moyenne FROM emprunter WHERE dateRet is NULL;
 
-SELECT AVG( datediff(dateRet, dateEmp)) as Moyenne FROM emprunter WHERE datediff(dateRet,dateEmp) < dureeMax;
+SELECT AVG( datediff(dateRet, dateEmp)) as Moyenne FROM emprunter WHERE datediff(dateRet,dateEmp) < dureeMax; 
