@@ -188,7 +188,7 @@ UPDATE emprunter SET dateRet=from_days(to_days(current_date)-315) WHERE NL=26;
 
 
 
-#############03###############""
+#############03###############
 /* TUPLES */
 SELECT SUM(TABLE_ROWS) as tuples from information_schema.tables WHERE TABLE_SCHEMA='biblio';
 
@@ -204,7 +204,7 @@ WHERE TABLE_SCHEMA = 'biblio';
 
 
 
-#####################05########################""
+#####################05########################
 /* CLE PRIMAIRE */
 SELECT emprunter.NL,adherents.NA,livres.NL, dateEmp,nom from adherents,livres,emprunter;
 
