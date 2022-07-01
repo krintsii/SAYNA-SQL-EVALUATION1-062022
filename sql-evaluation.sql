@@ -175,120 +175,177 @@ SELECT * from adherents;
 select * from oeuvres;
 /* tous les ouvres */
 
+
+
+#############################02###################################
+/* Corriger les erreurs : expliquer les corrections que vous apportez. */
 UPDATE emprunter SET dateEmp=from_days(to_days(current_date)-1290) WHERE NL=12;
 UPDATE emprunter SET dateRet=from_days(to_days(current_date)-300) WHERE NL=12;
 UPDATE emprunter SET dateEmp=from_days(to_days(current_date)-318) WHERE NL=26;
 UPDATE emprunter SET dateRet=from_days(to_days(current_date)-315) WHERE NL=26;
-/* Corriger les erreurs : expliquer les corrections que vous apportez. */
 
-SELECT titre from oeuvres,livres,emprunter where livres.NO=oeuvres.NO and livres.NL=emprunter.NL and dateRet is NULL;
+
+
+
+#######################06###########################
 /* les livres actuellement empruntés */
+SELECT titre from oeuvres,livres,emprunter where livres.NO=oeuvres.NO and livres.NL=emprunter.NL and dateRet is NULL;
 
 
-SELECT DISTINCT titre from oeuvres,emprunter,adherents,livres  where adherents.NA=emprunter.NA and livres.NL=emprunter.NL and livres.NO=oeuvres.NO and nom='Lecoeur' and prenom='Jeanette';
+
+
+
+
+############################07#############################
 /* les livres empruntés par Jeannette Lecoeur ? Vérifier dans la réponse
 qu’il n’y a pas d’homonymes. */
+SELECT DISTINCT titre from oeuvres,emprunter,adherents,livres  where adherents.NA=emprunter.NA and livres.NL=emprunter.NL and livres.NO=oeuvres.NO and nom='Lecoeur' and prenom='Jeanette';
 
 
 
-SELECT titre from oeuvres,livres,emprunter  where livres.NO=oeuvres.NO and livres.NL=emprunter.NL and dateEmp  BETWEEN '2021-09-01' AND  '2021-09-30';
+
+
+############################08###############################
 /* tous les livres empruntés en septembre 2021 */
+SELECT titre from oeuvres,livres,emprunter  where livres.NO=oeuvres.NO and livres.NL=emprunter.NL and dateEmp  BETWEEN '2021-09-01' AND  '2021-09-30';
 
 
 
-SELECT nom,prenom from adherents,livres,oeuvres,emprunter where adherents.NA=emprunter.NA and livres.NL=emprunter.NL and livres.NO=oeuvres.NO and auteur='Fedor DOSTOIEVSKI';
+
+############################"09"#####################################""
 /* Tous les adhérents qui ont emprunté un livre de Fedor Dostoievski. */
+SELECT nom,prenom from adherents,livres,oeuvres,emprunter where adherents.NA=emprunter.NA and livres.NL=emprunter.NL and livres.NO=oeuvres.NO and auteur='Fedor DOSTOIEVSKI';
 
 
-INSERT INTO adherents VALUES 
-(31,'Olivier','DUPOND','76 quai de la Loire, 75019 Paris','0102030405');
+
+
+
+
+
+#################################10############################
 /* Un nouvel adhérent vient de s’inscrire : Olivier DUPOND, 76, quai de la Loire,
 75019 Paris, téléphone : 0102030405 */
+INSERT INTO adherents VALUES 
+(31,'Olivier','DUPOND','76 quai de la Loire, 75019 Paris','0102030405');
 
 
+
+
+#################################11###############################
+/* Martine CROZIER vient d’emprunter « Au cœur des ténèbres » que vous venez
+d’ajouter et « Le rouge et le noir » chez Hachette, livre n°23. */
 INSERT INTO emprunter VALUES
 (23,from_days(to_days(current_date)),14,NULL,7),
 (31,from_days(to_days(current_date)),14,NULL,7);
-/* Martine CROZIER vient d’emprunter « Au cœur des ténèbres » que vous venez
-d’ajouter et « Le rouge et le noir » chez Hachette, livre n°23. */
 
 
 
-UPDATE emprunter set dateRet=from_days(to_days(current_date)) where NA=28;
+
+
+
+
+##############################12####################################
 /* M. Cyril FREDERIC ramène les livres qu’il a empruntés. */
+UPDATE emprunter set dateRet=from_days(to_days(current_date)) where NA=28;
 
 
-INSERT INTO emprunter VALUES
-(23,from_days(to_days(current_date)),14,NULL,28);
+
+
+
+
+########################13###############################
 /* M. Cyril FREDERIC essaye d’emprunter le livre n°23 */
 /* constatation :absurde */
-
-
-
 INSERT INTO emprunter VALUES
-(29,from_days(to_days(current_date)),14,NULL,28);
+(23,from_days(to_days(current_date)),14,NULL,28);
+
+
+
+
+
+
+###########################14##############################
 /* M. Cyril FREDERIC essaye d’emprunter le livre n°29 */
 /* constatation:ok */
+INSERT INTO emprunter VALUES
+(29,from_days(to_days(current_date)),14,NULL,28);
 
 
-SELECT auteur FROM oeuvres WHERE titre='voyage au bout de la nuit';
+
+
+
+##################15###############################
 /* les auteurs du titre « Voyage au bout de la nuit » */
+SELECT auteur FROM oeuvres WHERE titre='voyage au bout de la nuit';
 
 
 
-SELECT editeur from livres,oeuvres WHERE livres.NO=oeuvres.NO and titre='Narcisse et Goldmund';
+
+
+
+#######################16###############################
 /* les ou les éditeurs du titre « Narcisse et Goldmund » */
+SELECT editeur from livres,oeuvres WHERE livres.NO=oeuvres.NO and titre='Narcisse et Goldmund';
 
 
 
-SELECT nom,prenom FROM adherents,emprunter,livres,oeuvres WHERE adherents.NA=emprunter.NA and emprunter.NL=livres.NL and livres.NO=oeuvres.NO and emprunter.dateRet is NULL and to_days(CURRENT_DATE) > to_days(emprunter.dateEmp) + 14;
+
+##################17#########################
 /* les adhérents actuellement en retard */
+SELECT nom,prenom FROM adherents,emprunter,livres,oeuvres WHERE adherents.NA=emprunter.NA and emprunter.NL=livres.NL and livres.NO=oeuvres.NO and emprunter.dateRet is NULL and to_days(CURRENT_DATE) > to_days(emprunter.dateEmp) + 14;
 
 
 
 
-SELECT DISTINCT titre from oeuvres,emprunter,livres,adherents WHERE livres.NL=emprunter.NL and oeuvres.NO=livres.NO and emprunter.dateRet is NULL and to_days(CURRENT_DATE) > to_days(emprunter.dateEmp) + 14;
+###################18##########################
 /* les livres actuellement en retard */
+SELECT DISTINCT titre from oeuvres,emprunter,livres,adherents WHERE livres.NL=emprunter.NL and oeuvres.NO=livres.NO and emprunter.dateRet is NULL and to_days(CURRENT_DATE) > to_days(emprunter.dateEmp) + 14;
 
 
 
 
-
-SELECT nom,prenom,adherents.NA,count(*),avg(to_days(current_date)-
-to_days(emprunter.dateEmp) - 14) as moy_retard FROM adherents,emprunter,livres,oeuvres WHERE adherents.NA=emprunter.NA and emprunter.NL=livres.NL and livres.NO=oeuvres.NO and emprunter.dateRet is NULL and to_days(CURRENT_DATE) > to_days(emprunter.dateEmp) + 14 GROUP BY adherents.NA, nom;
+####################19###############################
 /* les adhérents en retard, avec le nombre de livres en retard et la
 moyenne du nombre de jours de retard. */
+SELECT nom,prenom,adherents.NA,count(*),avg(to_days(current_date)-
+to_days(emprunter.dateEmp) - 14) as moy_retard FROM adherents,emprunter,livres,oeuvres WHERE adherents.NA=emprunter.NA and emprunter.NL=livres.NL and livres.NO=oeuvres.NO and emprunter.dateRet is NULL and to_days(CURRENT_DATE) > to_days(emprunter.dateEmp) + 14 GROUP BY adherents.NA, nom;
 
 
 
-
-SELECT DISTINCT auteur, COUNT(*) FROM oeuvres,emprunter,livres WHERE oeuvres.NO=livres.NO and livres.NL=emprunter.NL GROUP BY auteur;
+############################20###########################
 /* Nombre de livres empruntés par auteur. */
+SELECT DISTINCT auteur, COUNT(*) FROM oeuvres,emprunter,livres WHERE oeuvres.NO=livres.NO and livres.NL=emprunter.NL GROUP BY auteur;
 
 
-SELECT DISTINCT editeur, COUNT(*) FROM oeuvres,emprunter,livres WHERE oeuvres.NO=livres.NO and livres.NL=emprunter.NL GROUP BY editeur;
+
+
+#################21#######################""
 /* Nombre de livres empruntés par éditeur. */
+SELECT DISTINCT editeur, COUNT(*) FROM oeuvres,emprunter,livres WHERE oeuvres.NO=livres.NO and livres.NL=emprunter.NL GROUP BY editeur;
 
 
 
-
-
-SELECT DISTINCT NL,dateEmp,dateRet, (to_days(dateret)-to_days(dateEmp)) duree FROM emprunter WHERE dateRet is NOT NULL ;
-SELECT AVG(to_days(dateret)-to_days(dateEmp)) FROM emprunter WHERE dateRet is NOT NULL;
+########################22##########################
 /* Durée moyenne des emprunts rendus. On commencera par afficher les durées
 des emprunts rendus. */
+SELECT DISTINCT NL,dateEmp,dateRet, (to_days(dateret)-to_days(dateEmp)) duree FROM emprunter WHERE dateRet is NOT NULL ;
+SELECT AVG(to_days(dateret)-to_days(dateEmp)) FROM emprunter WHERE dateRet is NOT NULL;
 
 
 
+####################23####################################
+/* Durée moyenne des retards pour l’ensemble des emprunts. */
 SELECT IF(to_days(IFNULL(dateRet,CURRENT_DATE)) - to_days(dateEmp) - dureeMax > 0, to_days(IFNULL(dateRet,CURRENT_DATE)) - to_days(dateEmp) - dureeMax, 0) retard, dateEmp, dateRet FROM emprunter;
 
 SELECT AVG(IF(to_days(IFNULL(dateRet,CURRENT_DATE)) - to_days(dateEmp) - dureeMax > 0, to_days(IFNULL(dateRet,CURRENT_DATE)) - to_days(dateEmp) - dureeMax, 0)) moyenne FROM emprunter;
-/* Durée moyenne des retards pour l’ensemble des emprunts. */
-
+/* autre methode */
 SELECT AVG( datediff(dateRet, dateEmp)) as Moyenne FROM emprunter WHERE datediff(dateRet,dateEmp) > dureeMax;
 
 
 
 
-SELECT AVG(if(to_days(IFNULL(dateRet,CURRENT_DATE)) - to_days(dateEmp) - dureeMax > 0, to_days(IFNULL(dateRet,CURRENT_DATE)) - to_days(dateEmp) - dureeMax, 0) )moyenne FROM emprunter WHERE dateRet is NULL;
+####################24####################################
 /* Durée moyenne des retards parmi les seuls retardataires */
+SELECT AVG(if(to_days(IFNULL(dateRet,CURRENT_DATE)) - to_days(dateEmp) - dureeMax > 0, to_days(IFNULL(dateRet,CURRENT_DATE)) - to_days(dateEmp) - dureeMax, 0) )moyenne FROM emprunter WHERE dateRet is NULL;
+
+SELECT AVG( datediff(dateRet, dateEmp)) as Moyenne FROM emprunter WHERE datediff(dateRet,dateEmp) < dureeMax;
